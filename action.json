@@ -1,0 +1,40 @@
+{
+    "actions": [{
+            "description": "Default Welcome Intent",
+            "name": "MAIN",
+            "fulfillment": {
+                "conversationName": "PROJECT_NAME"
+            },
+            "intent": {
+                "name": "actions.intent.MAIN",
+                "trigger": {
+                    "queryPatterns": [
+                        "Parler avec PROJECT_NAME"
+                    ]
+                }
+            }
+        },
+        {
+            "description": "Everything Else Intent",
+            "name": "TEXT",
+            "fulfillment": {
+                "conversationName": "PROJECT_NAME"
+            },
+            "intent": {
+                "name": "actions.intent.TEXT"
+            }
+        }
+    ],
+    "conversations": {
+        "Test PROJECT_NAME": {
+            "name": "PROJECT_NAME",
+            "url": "https://PROJECT_NAME.herokuapp.com/fulfillment",
+            "inDialogIntents": [{
+                "name": "actions.intent.CANCEL"
+            }, {
+                "name": "actions.intent.NO_INPUT"
+            }]
+        }
+    },
+    "locale": "fr"
+}
