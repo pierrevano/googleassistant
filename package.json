@@ -1,9 +1,10 @@
 {
-    "name": "googleassistant",
+    "name": "voicebot",
     "version": "1.0.0",
     "description": "PROJECT_NAME",
     "main": "app.js",
     "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node app.js"
     },
     "dependencies": {
@@ -16,6 +17,6 @@
     "engines": {
         "node": "10.15.3"
     },
-    "author": "XXX",
+    "author": "Pierre V",
     "license": "ISC"
 }

@@ -13,16 +13,45 @@ const app = actionssdk()
 
 // Define MAIN intent to start a conversation
 app.intent("actions.intent.MAIN", conv => {
-    conv.ask("<speak>Bienvenue sur XXX</speak>");
+    conv.ask("Bienvenue sur PROJECT_NAME");
+
+    // Define body data
+    const data = {
+            "XXX": XXX
+        };
+
+    // Send POST request
+    const options = {
+        method: "POST",
+        headers: {
+            "accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "charset": "utf-8"
+        },
+        data: qs.stringify(data),
+        url: endpoint
+    };
+
+    return axios(options)
+        .then(function(response) {
+            // Get contextId key from response
+            const b64string = response.data.values.contextId;
+            // Decode contextId response and save it as conversation data
+            conv.data.contextId = (Buffer.from(b64string, "base64")).toString("utf8");
+        })
+        .catch(function(error) {
+            console.log(error);
+        })
 });
 
 // Define TEXT intent to get user inputs
 app.intent("actions.intent.TEXT", (conv, input) => {
-    // Define body data
-    const data = {
-        "XXX": input,
-        "YYY": "YYY"
-    };
+    // Define body data with contextId
+    const contextId = conv.data.contextId,
+        data = {
+            "userInput": input,
+            "XXX": XXX
+        };
 
     // Send POST request
     const options = {
@@ -39,9 +68,12 @@ app.intent("actions.intent.TEXT", (conv, input) => {
     return axios(options)
         .then(function(response) {
             // Get text key from response
-            var b64string = response.data.values.text;
+            const b64string = response.data.values.text;
             // Decode response and remove html tags
-            var answer = (Buffer.from(b64string, "base64")).toString("utf8").replace(/<[^>]*>/g, "");
+            const answer = (Buffer.from(b64string, "base64")).toString("utf8")
+            .replace(/:<hr class=\"split\">/g, ": ")
+            .replace(/<br\/>|<hr class=\"split\">/g, ". ")
+            .replace(/<[^>]*>/g, "");
             return answer;
         })
         .then(function(answer) {
