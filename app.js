@@ -17,8 +17,8 @@ app.intent("actions.intent.MAIN", conv => {
 
     // Define body data
     const data = {
-            "XXX": XXX
-        };
+        "XXX": XXX
+    };
 
     // Send POST request
     const options = {
@@ -71,9 +71,9 @@ app.intent("actions.intent.TEXT", (conv, input) => {
             const b64string = response.data.values.text;
             // Decode response and remove html tags
             const answer = (Buffer.from(b64string, "base64")).toString("utf8")
-            .replace(/:<hr class=\"split\">/g, ": ")
-            .replace(/<br\/>|<hr class=\"split\">/g, ". ")
-            .replace(/<[^>]*>/g, "");
+                .replace(/:<hr class=\"split\">/g, ": ")
+                .replace(/<br\/>|<hr class=\"split\">/g, ". ")
+                .replace(/<[^>]*>/g, "");
             return answer;
         })
         .then(function(answer) {
